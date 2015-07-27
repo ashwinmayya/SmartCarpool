@@ -6,9 +6,11 @@ using System.Web.Http.OData;
 using Microsoft.WindowsAzure.Mobile.Service;
 using SmartCarpoolServiceService.DataObjects;
 using SmartCarpoolServiceService.Models;
+using Microsoft.WindowsAzure.Mobile.Service.Security;
 
 namespace SmartCarpoolServiceService.Controllers
 {
+	[AuthorizeLevel(AuthorizationLevel.User)]
     public class TodoItemController : TableController<TodoItem>
     {
         protected override void Initialize(HttpControllerContext controllerContext)
