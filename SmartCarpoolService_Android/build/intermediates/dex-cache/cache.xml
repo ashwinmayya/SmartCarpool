@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\ashwinm\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\18.0\cce0823396aa693798f8882e64213b1772032b09\guava-18.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="cce0823396aa693798f8882e64213b1772032b09">
+        <dex dex="C:\Users\ashwinm\Downloads\SmartCarpoolService_\SmartCarpoolService_Android\app\build\intermediates\pre-dexed\debug\guava-18.0-ea8d2fdf7c9d7f2f2bc5711e0cb6201e633c8755.jar" />
+    </item>
+    <item
+        jar="C:\Users\ashwinm\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3\5fc52c41ef0239d1093a1eb7c3697036183677ce\gson-2.3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="C:\Users\ashwinm\Downloads\SmartCarpoolService_\SmartCarpoolService_Android\app\build\intermediates\pre-dexed\debug\gson-2.3-d75aad1f6c4166d707970aaca4bffd20648de204.jar" />
+    </item>
+    <item
+        jar="C:\Users\ashwinm\.gradle\caches\modules-2\files-2.1\com.microsoft.azure\azure-notifications-handler\1.0.1\c322af100020e6db539f2aa367698d4b88fc453f\azure-notifications-handler-1.0.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="c322af100020e6db539f2aa367698d4b88fc453f">
+        <dex dex="C:\Users\ashwinm\Downloads\SmartCarpoolService_\SmartCarpoolService_Android\app\build\intermediates\pre-dexed\debug\azure-notifications-handler-1.0.1-bc140c5b8ed75223f6c9abd3c6295bb183cab58b.jar" />
+    </item>
+    <item
+        jar="C:\Users\ashwinm\.gradle\caches\modules-2\files-2.1\com.microsoft.azure\azure-mobile-services-android-sdk\2.0.3\5de03bab93697321e5654831bb98df11ad4c19ac\azure-mobile-services-android-sdk-2.0.3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="5de03bab93697321e5654831bb98df11ad4c19ac">
+        <dex dex="C:\Users\ashwinm\Downloads\SmartCarpoolService_\SmartCarpoolService_Android\app\build\intermediates\pre-dexed\debug\azure-mobile-services-android-sdk-2.0.3-d4a7bf0915bb9506a10f744a8142893374632b92.jar" />
+    </item>
+
+</items>
