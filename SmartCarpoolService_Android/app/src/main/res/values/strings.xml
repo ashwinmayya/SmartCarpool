@@ -6,5 +6,25 @@
     <string name="mobile_services">Mobile Services </string>
     <string name="menu_refresh">Refresh</string>
     <string name="checkbox_text">Item Text</string>
-    
+    <string name="app_title">Smart Carpool</string>
+    <string name="app_mode_driver">Give Ride</string>
+<string name="app_mode_passenger">Take Ride</string>
+    <string name="source_label">Source</string>
+    <string name="destination_label">Destination</string>
+    <string name="time_label">Leaving at</string>
+    <string name="ok_button_text">Request</string>
+    <string-array name="timerange">
+        <item>5 mins</item>
+        <item>10 mins</item>
+        <item>15 mins</item>
+        <item>20 mins</item>
+        <item>25 mins</item>
+        <item>30 mins</item>
+        <item>35 mins</item>
+        <item>40 mins</item>
+        <item>45 mins</item>
+        <item>50 mins</item>
+        <item>55 mins</item>
+        <item>60 mins</item>
+    </string-array>
 </resources>

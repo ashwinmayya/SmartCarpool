@@ -39,7 +39,7 @@ ADDED from AndroidManifest.xml:12:5
 		ADDED from AndroidManifest.xml:14:9
 	android:theme
 		ADDED from AndroidManifest.xml:16:9
-activity#com.example.smartcarpoolservice.ToDoActivity
+activity#com.example.smartcarpoolservice.SmartCarpoolHomepage
 ADDED from AndroidManifest.xml:18:9
 	android:label
 		ADDED from AndroidManifest.xml:19:13

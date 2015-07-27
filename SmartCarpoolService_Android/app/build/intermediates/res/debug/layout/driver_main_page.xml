@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/background_grid"
+        android:columnOrderPreserved="false"
+        android:columnCount="3"
+        android:rowCount="7"
+        style="@style/AppBaseTheme"></GridLayout>
+</LinearLayout>
+<!-- From: file:/C:/Users/bisen/Documents/GitHub/SmartCarpool/SmartCarpoolService_Android/app/src/main/res/layout/driver_main_page.xml -->
