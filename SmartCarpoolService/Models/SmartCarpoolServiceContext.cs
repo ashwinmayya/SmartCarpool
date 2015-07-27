@@ -27,7 +27,9 @@ namespace SmartCarpoolServiceService.Models
 
         public DbSet<TodoItem> TodoItems { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+	    public DbSet<User> Users { get; set; }
+
+	    protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             string schema = ServiceSettingsDictionary.GetSchemaName();
             if (!string.IsNullOrEmpty(schema))
@@ -39,6 +41,16 @@ namespace SmartCarpoolServiceService.Models
                 new AttributeToColumnAnnotationConvention<TableColumnAttribute, string>(
                     "ServiceTableColumn", (property, attributes) => attributes.Single().ColumnType.ToString()));
         }
+
+		public System.Data.Entity.DbSet<SmartCarpoolServiceService.DataObjects.RideRequest> RideRequests { get; set; }
+
+		public System.Data.Entity.DbSet<SmartCarpoolServiceService.DataObjects.Location> Locations { get; set; }
+
+		public System.Data.Entity.DbSet<SmartCarpoolServiceService.DataObjects.DriverRequest> DriverRequests { get; set; }
+
+		public System.Data.Entity.DbSet<SmartCarpoolServiceService.DataObjects.PassengerRequest> PassengerRequests { get; set; }
+
+		public System.Data.Entity.DbSet<SmartCarpoolServiceService.DataObjects.Ride> Rides { get; set; }
     }
 
 }
