@@ -63,6 +63,7 @@ import com.microsoft.windowsazure.mobileservices.authentication.MobileServiceUse
 public class SmartCarpoolHomepage extends Activity implements ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private MobileServiceClient mClient;
+    private MobileServiceTable<User> mUserTable;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     public EditText editText;
@@ -74,6 +75,24 @@ public class SmartCarpoolHomepage extends Activity implements ConnectionCallback
 
         setContentView(R.layout.driver_main_page);
         buildGoogleApiClient();
+
+        try {
+            // Create the Mobile Service Client instance, using the provided
+            // Mobile Service URL and key
+            mClient = new MobileServiceClient(
+                    "https://smartcarpoolservice.azure-mobile.net/",
+                    "LVxoMLwxEaIYGtRCmtbgLYGPwLuIMJ27", this);
+
+            // Authenticate passing false to load the current token cache if available.
+           // authenticate(false);
+
+        } catch (MalformedURLException e) {
+          //  createAndShowDialog(new Exception("Error creating the Mobile Service. " +
+          //          "Verify the URL"), "Error");
+        }
+
+        mUserTable = mClient.getTable(User.class);
+
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -110,7 +129,22 @@ public class SmartCarpoolHomepage extends Activity implements ConnectionCallback
 
 
 
+public void AddDriver(View view) throws ExecutionException, InterruptedException
+{
+    if(mClient == null)
+    {
+        return;
+    }
 
+    final User user = new User();
+    user.mName = "Jack";
+    user.mTotalPoints = 100;
+    user.mAuthId = "";
+    user.mId = "1";
+
+    User newUser = mUserTable.insert(user).get();
+    editText.setText(newUser.mName);
+}
 
    /* public void addItem(View view) {
         if (mClient == null) {
