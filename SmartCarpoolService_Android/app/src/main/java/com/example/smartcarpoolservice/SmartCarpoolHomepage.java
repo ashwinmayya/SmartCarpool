@@ -108,6 +108,7 @@ public class SmartCarpoolHomepage extends Activity implements ConnectionCallback
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -124,6 +125,13 @@ public class SmartCarpoolHomepage extends Activity implements ConnectionCallback
 
     }
 
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(20000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
     @Override
     public void onConnectionSuspended(int i) {
 
@@ -132,6 +140,9 @@ public class SmartCarpoolHomepage extends Activity implements ConnectionCallback
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+        editText = (EditText)findViewById(R.id.sourcetext);
+      //  editText.setText(String.valueOf(mLastLocation.getLatitude()) + "," + String.valueOf(mLastLocation.getLongitude()));
+        editText.setText(connectionResult.getErrorCode());
     }
 
 
@@ -150,6 +161,7 @@ public void AddDriver(View view) throws ExecutionException, InterruptedException
     user.mId = "1";
 
     User newUser = mUserTable.insert(user).get();
+    editText = (EditText)findViewById(R.id.sourcetext);
     editText.setText(newUser.mName);
 }
 
