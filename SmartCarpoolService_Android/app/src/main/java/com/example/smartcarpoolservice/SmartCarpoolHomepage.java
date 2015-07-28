@@ -43,6 +43,7 @@ import com.microsoft.windowsazure.mobileservices.table.sync.localstore.ColumnDat
 import com.microsoft.windowsazure.mobileservices.table.sync.localstore.MobileServiceLocalStoreException;
 import com.microsoft.windowsazure.mobileservices.table.sync.localstore.SQLiteLocalStore;
 import com.microsoft.windowsazure.mobileservices.table.sync.synchandler.SimpleSyncHandler;
+import com.microsoft.windowsazure.mobileservices.MobileServiceException;
 
 import static com.microsoft.windowsazure.mobileservices.table.query.QueryOperations.*;
 
@@ -67,6 +68,12 @@ public class SmartCarpoolHomepage extends Activity implements ConnectionCallback
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     public EditText editText;
+    public boolean bAuthenticating = false;
+    public final Object mAuthenticationLock = new Object();
+
+    public static final String SHAREDPREFFILE = "temp";
+    public static final String USERIDPREF = "uid";
+    public static final String TOKENPREF = "tkn";
 
 
     @Override
@@ -84,7 +91,7 @@ public class SmartCarpoolHomepage extends Activity implements ConnectionCallback
                     "LVxoMLwxEaIYGtRCmtbgLYGPwLuIMJ27", this);
 
             // Authenticate passing false to load the current token cache if available.
-           // authenticate(false);
+           authenticate(true);
 
         } catch (MalformedURLException e) {
           //  createAndShowDialog(new Exception("Error creating the Mobile Service. " +
@@ -146,41 +153,95 @@ public void AddDriver(View view) throws ExecutionException, InterruptedException
     editText.setText(newUser.mName);
 }
 
-   /* public void addItem(View view) {
-        if (mClient == null) {
-            return;
-        }
+    private boolean loadUserTokenCache(MobileServiceClient client)
+    {
+        SharedPreferences prefs = getSharedPreferences(SHAREDPREFFILE, Context.MODE_PRIVATE);
+        String userId = prefs.getString(USERIDPREF, "undefined");
+        if (userId == "undefined")
+            return false;
+        String token = prefs.getString(TOKENPREF, "undefined");
+        if (token == "undefined")
+            return false;
 
-        // Create a new item
-        final ToDoItem item = new ToDoItem();
+        MobileServiceUser user = new MobileServiceUser(userId);
+        user.setAuthenticationToken(token);
+        client.setCurrentUser(user);
 
-        item.setText(mTextNewToDo.getText().toString());
-        item.setComplete(false);
+        return true;
+    }
 
-        // Insert the new item
-        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>(){
+    private void cacheUserToken(MobileServiceUser user)
+    {
+        SharedPreferences prefs = getSharedPreferences(SHAREDPREFFILE, Context.MODE_PRIVATE);
+        Editor editor = prefs.edit();
+        editor.putString(USERIDPREF, user.getUserId());
+        editor.putString(TOKENPREF, user.getAuthenticationToken());
+        editor.commit();
+    }
+
+    private void createAndShowDialogFromTask(final Exception exception, String title) {
+        runOnUiThread(new Runnable() {
             @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    final ToDoItem entity = addItemInTable(item);
+            public void run() {
+                createAndShowDialog(exception, "Error");
+            }
+        });
+    }
 
-                    runOnUiThread(new Runnable() {
+    private void createAndShowDialog(Exception exception, String title) {
+        Throwable ex = exception;
+        if(exception.getCause() != null){
+            ex = exception.getCause();
+        }
+        createAndShowDialog(ex.getMessage(), title);
+    }
+
+    private void createAndShowDialog(final String message, final String title) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(message);
+        builder.setTitle(title);
+        builder.create().show();
+    }
+
+    private void authenticate(boolean bRefreshCache) {
+
+        bAuthenticating = true;
+
+        if (bRefreshCache || !loadUserTokenCache(mClient)) {
+            // New login using the provider and update the token cache.
+            mClient.login(MobileServiceAuthenticationProvider.Google,
+                    new UserAuthenticationCallback() {
                         @Override
-                        public void run() {
-                            if(!entity.isComplete()){
-                                mAdapter.add(entity);
+                        public void onCompleted(MobileServiceUser user,
+                                                Exception exception, ServiceFilterResponse response) {
+
+                            synchronized (mAuthenticationLock) {
+                                if (exception == null) {
+                                    cacheUserToken(mClient.getCurrentUser());
+                                   // createTable();
+                                } else {
+                                    createAndShowDialog(exception.getMessage(), "Login Error");
+                                }
+                                bAuthenticating = false;
+                                mAuthenticationLock.notifyAll();
                             }
                         }
                     });
-                } catch (final Exception e) {
-                    createAndShowDialogFromTask(e, "Error");
-                }
-                return null;
+        } else {
+            // Other threads may be blocked waiting to be notified when
+            // authentication is complete.
+            synchronized (mAuthenticationLock) {
+                bAuthenticating = false;
+                mAuthenticationLock.notifyAll();
             }
-        };
+            createTable();
+        }
+    }
 
-        runAsyncTask(task);
+    private void createTable(){
+            // Get the Mobile Service Table instance to use
 
-        mTextNewToDo.setText("");
-    }*/
+
+    }
 }
