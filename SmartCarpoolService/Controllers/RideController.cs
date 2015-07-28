@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
@@ -6,6 +7,7 @@ using System.Web.Http.OData;
 using Microsoft.WindowsAzure.Mobile.Service;
 using SmartCarpoolServiceService.DataObjects;
 using SmartCarpoolServiceService.Models;
+using Util;
 
 namespace SmartCarpoolServiceService.Controllers
 {
@@ -40,6 +42,7 @@ namespace SmartCarpoolServiceService.Controllers
         public async Task<IHttpActionResult> PostRide(Ride item)
         {
             Ride current = await InsertAsync(item);
+			
             return CreatedAtRoute("Tables", new { id = current.Id }, current);
         }
 

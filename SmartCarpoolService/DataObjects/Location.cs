@@ -10,5 +10,8 @@ namespace SmartCarpoolServiceService.DataObjects
 	public class Location : EntityData
 	{
 		public string Name { get; set; }
+		public double Lat { get; set; }
+		public double Lon { get; set; }
+
 	}
 }
