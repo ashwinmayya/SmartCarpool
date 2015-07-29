@@ -41,3 +41,11 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Custom
+*.dll
+*.class
+*.bin
+
+SmartCarpoolService_Android/local.properties
+SmartCarpoolService_Android/.idea/workspace.xml
