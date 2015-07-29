@@ -1,11 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.OData;
 using Microsoft.WindowsAzure.Mobile.Service;
+using Newtonsoft.Json.Linq;
 using SmartCarpoolServiceService.DataObjects;
 using SmartCarpoolServiceService.Models;
+using Util;
 
 namespace SmartCarpoolServiceService.Controllers
 {
@@ -40,6 +43,39 @@ namespace SmartCarpoolServiceService.Controllers
         public async Task<IHttpActionResult> PostPassengerRequest(PassengerRequest item)
         {
             PassengerRequest current = await InsertAsync(item);
+
+			var indexOperations = new List<Dictionary<string, object>>();
+			
+			// Start location
+			JObject sLoc = new JObject();
+			JArray sLonlat = new JArray();
+			sLonlat.Add(current.StartLocation.Lon);
+			sLonlat.Add(current.StartLocation.Lat);
+			sLoc.Add("type", "Point");
+			sLoc.Add("coordinates", sLonlat);
+			Dictionary<string, object> dict = new Dictionary<string, object>();
+
+			// End location
+			JObject eLoc = new JObject();
+			JArray eLonlat = new JArray();
+			eLonlat.Add(current.StartLocation.Lon);
+			eLonlat.Add(current.StartLocation.Lat);
+			eLoc.Add("type", "Point");
+			eLoc.Add("coordinates", eLonlat);
+
+			dict.Add("rideRequestId", current.Id);
+			dict.Add("startLocation", sLoc);
+			dict.Add("endLocation", eLoc);
+			dict.Add("@search.action", "upload");
+
+			//Id is required so I know which key to update in the search index
+			//dict.Add("storeId", address.Id);
+			//Rather than update, I will do a merge to update the new lat and lon
+			//dict.Add("@search.action", "merge");
+
+			indexOperations.Add(dict);
+
+			AzureSearchHelper.IndexBatch(indexOperations);
             return CreatedAtRoute("Tables", new { id = current.Id }, current);
         }
 
