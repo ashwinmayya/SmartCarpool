@@ -63,9 +63,9 @@ namespace SmartCarpoolServiceService.Controllers
 			eLoc.Add("type", "Point");
 			eLoc.Add("coordinates", eLonlat);
 
-			dict.Add("RideRequestId", current.Id);
-			dict.Add("StartLocationId", sLoc);
-			dict.Add("EndLocation", eLoc);
+			dict.Add("rideRequestId", current.Id);
+			dict.Add("startLocation", sLoc);
+			dict.Add("endLocation", eLoc);
 			dict.Add("@search.action", "upload");
 
 			//Id is required so I know which key to update in the search index
