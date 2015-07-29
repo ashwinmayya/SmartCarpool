@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "19.1.0"
+    buildToolsVersion "21.1.0"
 
     defaultConfig {
         applicationId "com.example.zumoappname"
@@ -10,6 +10,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        multiDexEnabled = true
     }
     buildTypes {
         release {
@@ -27,11 +28,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:multidex:1.0.0'
+    compile(group: 'com.microsoft.azure', name: 'azure-notifications-handler', version: '1.0.1', ext: 'jar')
+
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.google.guava:guava:18.0'
-    compile 'com.google.android.gms:play-services:7.5.0'
+    compile 'com.google.android.gms:play-services:6.5.87'
     compile 'com.microsoft.azure:azure-mobile-services-android-sdk:2.0.3'
-	compile (group: 'com.microsoft.azure', name: 'azure-notifications-handler', version: '1.0.1', ext: 'jar')
-    compile 'com.android.support:appcompat-v7:22.0.0'
-
+    compile 'com.android.support:appcompat-v7:22.2.1'
 }
