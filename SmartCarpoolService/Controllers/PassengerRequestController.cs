@@ -62,8 +62,6 @@ namespace SmartCarpoolServiceService.Controllers
 			eLonlat.Add(current.StartLocation.Lat);
 			eLoc.Add("type", "Point");
 			eLoc.Add("coordinates", eLonlat);
-			Dictionary<string, object> dict = new Dictionary<string, object>();
-
 
 			dict.Add("RideRequestId", current.Id);
 			dict.Add("StartLocationId", sLoc);
