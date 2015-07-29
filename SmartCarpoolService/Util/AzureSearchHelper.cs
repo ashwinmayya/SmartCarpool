@@ -58,7 +58,29 @@ namespace Util
 			HttpResponseMessage response = AzureSearchHelper.SendSearchRequest(_httpClient, HttpMethod.Post, uri, json);
 			response.EnsureSuccessStatusCode();
 		}
+		public static dynamic Search(double sLat, double sLon, double eLat, double eLon)
+		{
+			string search = "search=*";
+			//string filter = "&$filter=geo.distance(location,geography'POINT(" + EscapeODataString(lon) + " " + EscapeODataString(lat) + ")')+le+" + EscapeODataString(distance.ToString());
+			string filter = "&$filter=geo.intersects(startLocation, geography'POLYGON(("
+			           + sLon + " " + sLat + ", "
+			           + eLon + " " + sLat + ", "
+			           + eLon + " " + eLat + ", "
+			           + sLon + " " + eLat + ", "
+			           + sLon + " " + sLat
+			           + "))') and geo.intersects(endLocation, geography'POLYGON(("
+			           + sLon + " " + sLat + ", "
+			           + eLon + " " + sLat + ", "
+			           + eLon + " " + eLat + ", "
+			           + sLon + " " + eLat + ", "
+			           + sLon + " " + sLat
+			           + "))')";
+			Uri uri = new Uri(_serviceUri, "/indexes/"+ ConfigurationManager.AppSettings["IndexName"] + "/docs?" + search + filter);
+			HttpResponseMessage response = AzureSearchHelper.SendSearchRequest(_httpClient, HttpMethod.Get, uri);
+			AzureSearchHelper.EnsureSuccessfulSearchResponse(response);
 
+			return AzureSearchHelper.DeserializeJson<dynamic>(response.Content.ReadAsStringAsync().Result);
+		}
 		public static string SerializeJson(object value)
 		{
 			return JsonConvert.SerializeObject(value, _jsonSettings);

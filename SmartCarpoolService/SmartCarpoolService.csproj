@@ -191,6 +191,7 @@
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\PassengerRequestController.cs" />
     <Compile Include="Controllers\RideController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TodoItemController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataObjects\Location.cs" />

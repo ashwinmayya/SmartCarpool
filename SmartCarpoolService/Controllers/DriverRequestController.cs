@@ -49,5 +49,9 @@ namespace SmartCarpoolServiceService.Controllers
              return DeleteAsync(id);
         }
 
+	    public string Test()
+	    {
+		    return "Test success";
+	    }
     }
 }
