@@ -25,7 +25,8 @@ namespace Util
 {
 	public class AzureSearchHelper
 	{
-		public const string ApiVersionString = "api-version=2014-07-31-Preview";
+		public const string ApiVersionStringPreview = "api-version=2014-07-31-Preview";
+		public const string ApiVersionString = "api-version=2015-02-28";
 		private static readonly Uri _serviceUri;
 		private static HttpClient _httpClient;
 		private static readonly JsonSerializerSettings _jsonSettings;
