@@ -75,7 +75,6 @@ import com.microsoft.windowsazure.mobileservices.authentication.MobileServiceUse
 public class SmartCarpoolHomepage extends FragmentActivity implements ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OnMapReadyCallback {
 
     private MobileServiceClient mClient;
-    private MobileServiceTable<User> mUserTable;
     private GoogleApiClient mGoogleApiClient;
     public static EditText editText;
     public boolean bAuthenticating = false;
@@ -111,7 +110,6 @@ public class SmartCarpoolHomepage extends FragmentActivity implements Connection
           //          "Verify the URL"), "Error");
         }
 
-        mUserTable = mClient.getTable(User.class);
         //setUpMapIfNeeded();
 
         SupportMapFragment mapFragement = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -182,24 +180,6 @@ public void CreateRequest(View view) throws ExecutionException, InterruptedExcep
         intent.putExtra(Constants.LOCATION_DATA_EXTRA, mLastLocation);
         startService(intent);
     }
-
-public void AddDriver(View view) throws ExecutionException, InterruptedException
-{
-    if(mClient == null)
-    {
-        return;
-    }
-
-    final User user = new User();
-    user.mName = "Jack";
-    user.mTotalPoints = 100;
-    user.mAuthId = "";
-    user.mId = "1";
-
-    User newUser = mUserTable.insert(user).get();
-    editText = (EditText)findViewById(R.id.sourcetext);
-    editText.setText(newUser.mName);
-}
 
     private boolean loadUserTokenCache(MobileServiceClient client)
     {
@@ -333,7 +313,6 @@ public void AddDriver(View view) throws ExecutionException, InterruptedException
     /*private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }*/
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
