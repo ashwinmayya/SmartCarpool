@@ -47,5 +47,8 @@ Temporary Items
 *.class
 *.bin
 
+SmartCarpoolService_Android/app/build/
 SmartCarpoolService_Android/local.properties
 SmartCarpoolService_Android/.idea/workspace.xml
+SmartCarpoolService_Android/local.properties
+*.bin
